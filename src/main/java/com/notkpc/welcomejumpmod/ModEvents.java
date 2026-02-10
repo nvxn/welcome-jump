@@ -43,9 +43,9 @@ public class ModEvents {
     private void triggerTrollTrap(ServerPlayer player) {
         Timer timer = new Timer();
 
-        timer.schedule(new TrollTask(player), 3000); // A los 3 seg
-        timer.schedule(new TrollTask(player), 4500); // A los 4.5 seg (remate)
-        timer.schedule(new TrollTask(player), 6000); // A los 4.5 seg (remate)
+        timer.schedule(new TrollTask(player), 2500);
+        timer.schedule(new TrollTask(player), 4000);
+        timer.schedule(new TrollTask(player), 5500);
     }
 
     static class TrollTask extends TimerTask {
@@ -61,19 +61,13 @@ public class ModEvents {
             if (player.getServer() != null) {
                 player.getServer().execute(() -> {
                     if (!player.isRemoved() && player.connection != null) {
-
-                        // 1. EL SUSTO (Audio)
                         player.playNotifySound(SoundEvents.CREEPER_PRIMED, SoundSource.HOSTILE, 1.0f, 0.5f);
-
-                        // 2. EL MAREO (Efecto)
                         player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 100, 1, false, false));
 
-                        // 3. LANZAMIENTO RANDOM
                         double randomX = (random.nextDouble() - 0.5) * 3.0;
                         double randomZ = (random.nextDouble() - 0.5) * 3.0;
-                        double upForce = 0.6 + (random.nextDouble() * 0.4); // Entre 0.6 y 1.0 para arriba
+                        double upForce = 0.6 + (random.nextDouble() * 0.4);
 
-                        // FUERZA
                         player.setDeltaMovement(randomX, upForce, randomZ);
                         player.hasImpulse = true;
 
